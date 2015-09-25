@@ -1,9 +1,13 @@
 # Can ignore specific files
 .DS_Store
+.vagrant
+.ipynb_checkpoints
+.git
+
 
 # Use wildcards as well
 *~
 *.swp
 
 # Can also ignore all directories and files in a directory.
-tmp/**/* 
+test/**/* 
