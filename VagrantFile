@@ -1,0 +1,23 @@
+Vagrant.configure(2) do |config|
+  #config.vm.box = "quickstart/cdh"  
+  #config.vm.box_version = "5.4.2"
+  config.vm.box = "cdh"
+
+
+  config.vm.synced_folder "./", "/home/cloudera/tree", create: true, group: "cloudera", owner: "cloudera"
+
+  # Provider-specific configuration so you can fine-tune various
+  # backing providers for Vagrant. These expose provider-specific options.
+  # Example for VirtualBox:
+  #
+  config.vm.provider "virtualbox" do |vb|
+    vb.gui = false
+    vb.cpus = "2"
+    vb.memory = "8192"
+  end
+ 
+  config.vm.provision "shell", run: "always", inline: <<-SHELL
+    sudo service cloudera-scm-agent start
+  SHELL
+
+end
