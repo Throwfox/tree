@@ -42,7 +42,7 @@ Vagrant.configure(2) do |config|
     fi
 
     # Starting ipython notebook
-    sed -i '/.*c\.NotebookApp\.notebook_dir.*/c\c\.NotebookApp\.notebook_dir = u\"\/home\/cloudera\/tree\/nb\"' ipython_notebook_config.py
+    sed -i '/.*c\.NotebookApp\.notebook_dir.*/c\c\.NotebookApp\.notebook_dir = u\"\/home\/cloudera\/tree\/nb\"' /home/cloudera/.ipython/profile_pyspark/ipython_notebook_config.py
     runuser -l cloudera -c 'nohup /opt/anaconda/bin/ipython notebook --profile=pyspark &> /dev/null &'
     echo 'Provision Complete! Navigate to localhost:8890 to run analysis.'
   SHELL
