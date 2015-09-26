@@ -35,14 +35,14 @@ Vagrant.configure(2) do |config|
        HADOOP_USER_NAME=cloudera hdfs dfs -mkdir /user/cloudera/german
        HADOOP_USER_NAME=cloudera hdfs dfs -put /home/cloudera/tree/data/german_credit.csv /user/cloudera/german/
        # Run hive script to create table on text file and a copy in parquet
-       HADOOP_USER_NAME=cloudera hive -f /home/cloudera/tree/script/00_create_tables.hql
+       HADOOP_USER_NAME=cloudera hive -f /home/cloudera/tree/init/create_tables.hql
        # ensure that table is accessible in impala
        HADOOP_USER_NAME=cloudera impala-shell -q 'invalidate metadata default.german'
        HADOOP_USER_NAME=cloudera impala-shell -q 'invalidate metadata default.german_parquet'
     fi
 
     # Starting ipython notebook
-    sed -i '/.*c\.NotebookApp\.notebook_dir.*/c\c\.NotebookApp\.notebook_dir = u\"\/home\/cloudera\/tree\/notebook\"' ipython_notebook_config.py
+    sed -i '/.*c\.NotebookApp\.notebook_dir.*/c\c\.NotebookApp\.notebook_dir = u\"\/home\/cloudera\/tree\/nb\"' ipython_notebook_config.py
     runuser -l cloudera -c 'nohup /opt/anaconda/bin/ipython notebook --profile=pyspark &> /dev/null &'
     echo 'Provision Complete! Navigate to localhost:8890 to run analysis.'
   SHELL
