@@ -18,13 +18,13 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", run: "always", inline: <<-SHELL
     sudo service cloudera-scm-agent start
     echo 'Initializing CDH Components...'
-    /home/cloudera/tree/script/cm_service.py hdfs start
-    /home/cloudera/tree/script/cm_service.py yarn start
-    /home/cloudera/tree/script/cm_service.py zookeeper start
-    /home/cloudera/tree/script/cm_service.py spark_on_yarn start
-    /home/cloudera/tree/script/cm_service.py hive start
-    /home/cloudera/tree/script/cm_service.py impala start
-    /home/cloudera/tree/script/cm_service.py hue start
+    /home/cloudera/tree/init/cm_service.py hdfs start
+    /home/cloudera/tree/init/cm_service.py yarn start
+    /home/cloudera/tree/init/cm_service.py zookeeper start
+    /home/cloudera/tree/init/cm_service.py spark_on_yarn start
+    /home/cloudera/tree/init/cm_service.py hive start
+    /home/cloudera/tree/init/cm_service.py impala start
+    /home/cloudera/tree/init/cm_service.py hue start
 
     # Preping data specific to tree analysis, done as cloudera
     su cloudera
