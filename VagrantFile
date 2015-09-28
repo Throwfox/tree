@@ -1,7 +1,6 @@
 Vagrant.configure(2) do |config|
-  #config.vm.box = "quickstart/cdh"  
-  #config.vm.box_version = "5.4.2"
-  config.vm.box = "cdh"
+  config.vm.box = "quickstart/cdh"  
+  config.vm.box_version = "5.4.2"
 
   config.vm.synced_folder "./", "/home/cloudera/tree", create: true, group: "cloudera", owner: "cloudera"
 
@@ -41,10 +40,14 @@ Vagrant.configure(2) do |config|
        HADOOP_USER_NAME=cloudera impala-shell -q 'invalidate metadata default.german_parquet'
     fi
 
+    # add link to allow sqlCtx
+    ln -s /etc/hive/conf.cloudera.hive/hive-site.xml /etc/spark/conf.cloudera.spark_on_yarn
+
     # Starting ipython notebook
-    sed -i '/.*c\.NotebookApp\.notebook_dir.*/c\c\.NotebookApp\.notebook_dir = u\"\/home\/cloudera\/tree\/nb\"' /home/cloudera/.ipython/profile_pyspark/ipython_notebook_config.py
+    sed -i '/.*c\.NotebookApp\.notebook_dir.*/c c\.NotebookApp\.notebook_dir = u\"\/home\/cloudera\/tree\/nb\"' /home/cloudera/.ipython/profile_pyspark/ipython_notebook_config.py
     runuser -l cloudera -c 'nohup /opt/anaconda/bin/ipython notebook --profile=pyspark &> /dev/null &'
     echo 'Provision Complete! Navigate to localhost:8890 to run analysis.'
+
   SHELL
 
 end
